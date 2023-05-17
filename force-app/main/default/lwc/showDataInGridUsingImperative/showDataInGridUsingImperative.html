@@ -1,0 +1,35 @@
+<template>
+    <!-- lightning button for open modal window -->
+    <lightning-button variant="brand"
+        label="Add Contact"
+        title="Add Contact"
+        onclick={openChildModal}
+        class="slds-m-left_x-small">
+    </lightning-button>
+    <!--Use template if:true to display/hide popup based on isModalOpen value--> 
+    <!-- <template if:true={isModalOpen}> -->
+        <c-add-contact-through-modal-popup is-modal-open={isChildModalOpen} record-id={editRecordId} is-new={isNewRecord}
+            onrecordcleared={handleRecordCleared} 
+            onpopupclosed={handlePopUpClosed}
+            onnewrecordcreated={handleNewRecordCreated}>
+        </c-add-contact-through-modal-popup>
+        <c-message-component is-delete-model-open={isDeleteRow} row-id={deleteRowId} 
+        message-heading={heading}
+        message-string={message}
+        ongotconfirmation={handleGotConfirmation}></c-message-component>
+    <!-- </template> -->
+    <div class="spinner">
+        <template if:true={isLoading}>
+             <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+             </lightning-spinner>
+        </template>
+    </div>
+    <lightning-card title="Search Records">
+        <p class="slds-p-horizontal-small">
+            <lightning-input name="searchByName" value={searchMe} class="slds-m-left_x-small" label="Name" onchange={setNameVal}></lightning-input>
+            <lightning-button label="Filter" onclick={filterData} class="slds-m-left_x-small" slot="action"></lightning-button>
+        </p>
+    </lightning-card>
+    <lightning-datatable data={contactData} onrowaction={handleRowAction} columns={columns} key-field="id" hide-checkbox-column
+    show-row-number-column></lightning-datatable>
+</template>

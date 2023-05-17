@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Add Values">
+        <p class="slds-p-horizontal_small">
+            <lightning-input name="firstDigit" value={frstDigit} type="number" label="First Digit" onchange={setValues}>
+            </lightning-input>
+            <lightning-input name="secondDigit" value={scndDigit} type="number" label="Second Digit" onchange={setValues}>
+            </lightning-input>
+        </p>
+    <p slot="footer">{total}</p>
+    </lightning-card>
+    <lightning-button onclick={getResult} slot="action" label="Add"></lightning-button>
+    
+</template>

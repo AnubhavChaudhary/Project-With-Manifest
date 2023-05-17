@@ -1,0 +1,79 @@
+<template>
+    <div class="slds-box slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none" style="background-color:white;">   
+
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="12" style="width:75%">
+                <div class="slds-grid" style="height:50px">
+                    <div class="slds-size_1-of-3" style="width:160px; padding-right: 4px;">
+                        <lightning-combobox name="status" label="Status" value={value} options={StatusOptions} 
+                        placeholder="Select Status"
+                        onchange={handleStatusChange}> </lightning-combobox> 
+                    </div>
+                    <div class="slds-size_1-of-3" style="width:160px; padding-right: 4px;">
+                        <lightning-combobox name="priority" label="Priority" value={Priorityvalue} options={PriorityOptions} 
+                        placeholder="Select Priority" 
+                        onchange={handlePriorityChange}> </lightning-combobox> 
+                    </div>
+                    <div class="slds-size_1-of-3" style="width:160px; padding-top: 22px">
+                        <lightning-button label="Filter" variant="brand" onclick={filterData} class="slds-m-left_x-small" slot="action"></lightning-button>
+                    </div>
+                </div>
+            </lightning-layout-item>
+            
+            <lightning-layout-item size="9">
+                <div class="slds-size_2-of-3" style="width:160px; padding-top: 37px">
+                    <lightning-button label="New Ticket" variant="brand" slot="action"
+                    onclick={openChildModal} class="slds-size_full" name="NewTicket" ></lightning-button>
+                </div>
+            </lightning-layout-item>
+
+        </lightning-layout>
+        <c-add-record-through-model-popup-with-uploaded-files is-modal-open={isChildModalOpen} is-new={isNewRecord} priority-options={PriorityOptions}
+            onrecordcleared={handleRecordCleared} 
+            onpopupclosed={handlePopUpClosed}
+            onnewrecordcreated={handleNewRecordCreated}>
+        </c-add-record-through-model-popup-with-uploaded-files>
+
+        <lightning-layout-item size="4">
+            <div style=" font-size: 30px;
+            font-weight: 700;
+            color: #070781;
+            padding: 10p;
+            margin-left: 20px;
+            margin-bottom:2rem"> Tickets</div>
+           </lightning-layout-item>  
+
+        <div class="myTable"></div>
+        <lightning-datatable key-field="CaseId" 
+                                hide-checkbox-column="true"
+                                data={recordsListInPage}
+                                columns={columns}
+                                sorted-by={sortBy}
+                                sorted-direction={sortDirection}
+                                onsort={doSorting}>
+        </lightning-datatable>
+        
+        <div class="slds-align_absolute-center"> 
+            <div class="slds-p-right_xx-small">
+                     
+                <lightning-button label="Prev"
+                disabled={isPrev} onclick={handlePrev}
+                                    variant="brand"
+                                    icon-name="utility:back"
+                                    name="prev"></lightning-button>  
+            </div>
+            <span class="slds-badge slds-badge_lightest">
+                {recordStart}-{recordEnd} of {totalRecords} | Page {pageNumber} of {totalPages}
+            </span>
+            <div class="slds-p-left_xx-small">
+                <lightning-button label="Next"
+                disabled={isNext} onclick={handleNext}
+                                    variant="brand"
+                                    icon-name="utility:forward"
+                                    icon-position="right"
+                                    name="next"></lightning-button>
+            </div>
+        </div>  
+    </div>
+    
+</template>
